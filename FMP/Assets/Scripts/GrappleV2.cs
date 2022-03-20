@@ -7,6 +7,7 @@ public class GrappleV2 : MonoBehaviour
 {
     LineRenderer lr;
     Vector3 grapplePoint;
+    Vector3 grappleAimPoint;
     public LayerMask whatsIsGrappleable;
     public Transform grappleTip, camera, player;
     public float maxDistance;
@@ -15,6 +16,8 @@ public class GrappleV2 : MonoBehaviour
     //public Animator anim;
     public GameObject grapplepoint;
     public Rigidbody rb;
+
+    public float aimSize = 10f;
 
     void Start()
     {
@@ -35,6 +38,19 @@ public class GrappleV2 : MonoBehaviour
             //playerRig.weight = 0;
 
         }
+
+        if (Physics.SphereCast(camera.position, aimSize, camera.forward, out RaycastHit aimhit, maxDistance, whatsIsGrappleable))
+        {
+            grappleAimPoint = aimhit.point;
+            grapplepoint.SetActive(true);
+            grapplepoint.transform.position = grappleAimPoint;
+        }
+        else
+        {
+            grapplepoint.SetActive(false);
+        }
+
+
     }
 
     void LateUpdate()
@@ -45,7 +61,7 @@ public class GrappleV2 : MonoBehaviour
     void StartGrapple()
     {
         RaycastHit hit;
-        if(Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatsIsGrappleable))
+        if(Physics.SphereCast(camera.position,aimSize, camera.forward, out hit, maxDistance, whatsIsGrappleable))
         {
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
@@ -65,14 +81,20 @@ public class GrappleV2 : MonoBehaviour
             lr.positionCount = 2;
 
             //playerRig.weight = 1;
-            grapplepoint.SetActive(true);
-            grapplepoint.transform.position = grapplePoint;
         }
         else
         {
 
         }
         
+    }
+
+    void DoubleGrappleStart()
+    {
+        if(Physics.SphereCast(camera.transform.position,aimSize,camera.transform.forward, out RaycastHit raycastHit,maxDistance,whatsIsGrappleable))
+        {
+
+        }
     }
 
     void DrawRope()
@@ -88,7 +110,6 @@ public class GrappleV2 : MonoBehaviour
     {
         lr.positionCount = 0;
         Destroy(joint);
-        grapplepoint.SetActive(false);
     }
 
     public bool IsGrappling()
