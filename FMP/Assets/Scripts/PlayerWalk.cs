@@ -22,6 +22,8 @@ public class PlayerWalk : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Physics.IgnoreLayerCollision(7, 3);
+        Physics.IgnoreLayerCollision(7, 6);
     }
 
     void Update()
@@ -31,6 +33,7 @@ public class PlayerWalk : MonoBehaviour
         direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         Walk();
+
     }
 
     void FixedUpdate()
