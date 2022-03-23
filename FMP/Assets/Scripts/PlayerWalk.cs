@@ -11,6 +11,7 @@ public class PlayerWalk : MonoBehaviour
     float turnsmoothing = 0.1f;
     float turnsmoothvelocity = 0.5f;
     public float maxVelocity = 20f;
+    public float jumpVelocity = 100f;
 
     public Transform groundcheck;
     public float grounddistance = 0.4f;
@@ -96,6 +97,16 @@ public class PlayerWalk : MonoBehaviour
         {
             rb.AddForce(transform.up.normalized * jumpheight, ForceMode.Impulse);// here u jump
             isgrounded = false;
+        }
+        if (rb.velocity.y > 0)
+        {
+            if (rb.velocity.sqrMagnitude > jumpVelocity)
+            {
+                Vector3 endVelocity = rb.velocity;
+                endVelocity.y *= 0.9f;
+                rb.velocity = endVelocity;
+
+            }
         }
     }
 }
