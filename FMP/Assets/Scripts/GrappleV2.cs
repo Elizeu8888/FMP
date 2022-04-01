@@ -23,7 +23,7 @@ public class GrappleV2 : MonoBehaviour
 
     bool isgrappling = false, isgrappling2 = false;
 
-
+    public Animator anim;
     bool grappleMode = false;
 
 
@@ -39,7 +39,14 @@ public class GrappleV2 : MonoBehaviour
             grappleMode = !grappleMode;
         }
 
-
+        if(isgrappling == true || isgrappling2 == true)
+        {
+            anim.SetBool("Grappling", true);
+        }
+        else
+        {
+            anim.SetBool("Grappling", false);
+        }
 
 
         if(grappleMode == true)

@@ -18,6 +18,8 @@ public class PlayerWalk : MonoBehaviour
     public LayerMask groundmask;
     public bool isgrounded;
 
+    public Animator anim;
+
     Vector3 direction;
 
     void Start()
@@ -34,7 +36,22 @@ public class PlayerWalk : MonoBehaviour
         direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         Walk();
-
+        if(rb.velocity.sqrMagnitude > 0.2)
+        {
+            anim.SetBool("Walking", true);
+        }
+        else
+        {
+            anim.SetBool("Walking", false);
+        }
+        if(isgrounded == false)
+        {
+            anim.SetBool("Grounded", false);
+        }
+        else
+        {
+            anim.SetBool("Grounded", true);
+        }
     }
 
     void FixedUpdate()
