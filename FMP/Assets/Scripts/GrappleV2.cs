@@ -9,6 +9,7 @@ public class GrappleV2 : MonoBehaviour
     Vector3 grapplePoint;
     Vector3 grappleAimPoint;
     public LayerMask whatsIsGrappleable;
+    public LayerMask notGrappleable;
     public Transform camera,camLeft,camRight, player;
     public float maxDistance;
     SpringJoint joint;
@@ -19,12 +20,12 @@ public class GrappleV2 : MonoBehaviour
 
     public float swing = 0.8f, pull = 0.05f;
 
-    public float aimSize = 10f, aimSideSize = 2f;
+    public float aimSize = 10f, aimSideSize = 2f, aimBlock = 3f;
 
     bool isgrappling = false, isgrappling2 = false;
 
     public Animator anim;
-    bool grappleMode = false;
+    bool grappleMode = false, canGrapple = false;
 
 
     void Start()
@@ -49,7 +50,7 @@ public class GrappleV2 : MonoBehaviour
         }
 
 
-        if(grappleMode == true)
+        if (grappleMode == true)
         {
 
             grappleTip2.SetActive(true);
@@ -59,7 +60,6 @@ public class GrappleV2 : MonoBehaviour
             if (Input.GetMouseButtonDown(1) && isgrappling2 == false)
             {
                 StartGrapple(pull);
-                isgrappling = true;
             }
             else if (Input.GetMouseButtonUp(1))
             {
@@ -72,7 +72,7 @@ public class GrappleV2 : MonoBehaviour
             {
                 StartGrapple(swing);
                 isgrappling2 = true;
-                
+
             }
             else if (Input.GetMouseButtonUp(0))
             {
@@ -80,44 +80,80 @@ public class GrappleV2 : MonoBehaviour
                 isgrappling2 = false;
             }
 
+
             if (Physics.SphereCast(camera.position, aimSize, camera.forward, out RaycastHit aimhit, maxDistance, whatsIsGrappleable))
             {
-                grappleAimPoint = aimhit.point;
-                grapplepoint.SetActive(true);
-                grapplepoint.transform.position = grappleAimPoint; ;
+                if (aimhit.transform.gameObject.layer == LayerMask.NameToLayer("grapplable"))
+                {
+                    grappleAimPoint = aimhit.point;
+                    grapplepoint.SetActive(true);
+                    grapplepoint.transform.position = grappleAimPoint;
+                    canGrapple = true;
+                }
+                else
+                {
+                    grapplepoint.SetActive(false);
+                    canGrapple = false;
+                }
+
             }
             else
             {
                 if (Physics.SphereCast(camRight.position, aimSideSize, camRight.forward, out RaycastHit aimside, maxDistance, whatsIsGrappleable))
                 {
-                    grappleAimPoint = aimside.point;
-                    grapplepoint.SetActive(true);
-                    grapplepoint.transform.position = grappleAimPoint;
+                    if (aimside.transform.gameObject.layer == LayerMask.NameToLayer("grapplable"))
+                    {
+                        grappleAimPoint = aimside.point;
+                        grapplepoint.SetActive(true);
+                        grapplepoint.transform.position = grappleAimPoint;
+                        canGrapple = true;
+                    }
+                    else
+                    {
+                        grapplepoint.SetActive(false);
+                        canGrapple = false;
+                    }
+
                 }
                 else
                 {
 
                     if (Physics.SphereCast(camLeft.position, aimSideSize, camLeft.forward, out RaycastHit aimsideL, maxDistance, whatsIsGrappleable))
                     {
-                        grappleAimPoint = aimsideL.point;
-                        grapplepoint.SetActive(true);
-                        grapplepoint.transform.position = grappleAimPoint;
+                        if (aimsideL.transform.gameObject.layer == LayerMask.NameToLayer("grapplable"))
+                        {
+                            grappleAimPoint = aimsideL.point;
+                            grapplepoint.SetActive(true);
+                            grapplepoint.transform.position = grappleAimPoint;
+                            canGrapple = true;
+                        }
+                        else
+                        {
+                            grapplepoint.SetActive(false);
+                            canGrapple = false;
+                        }
+
+
                     }
                     else
                     {
                         grapplepoint.SetActive(false);
+                        canGrapple = false;
                     }
                 }
 
 
             }
+            
         }
         else
         {
             grappleTip2.SetActive(false);
             grappleTip.SetActive(false);
             StopGrapple();
+
         }
+
 
 
     }
@@ -130,38 +166,18 @@ public class GrappleV2 : MonoBehaviour
     void StartGrapple(float maxdist)
     {
         RaycastHit hit;
-        if(Physics.SphereCast(camera.position,aimSize, camera.forward, out hit, maxDistance, whatsIsGrappleable))
+        if(canGrapple == true)
         {
-            grapplePoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
-
-            float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
-
-            joint.maxDistance = distancefrompoint * maxdist;
-            joint.minDistance = distancefrompoint * 0.05f;
-
-            joint.spring = 5f;
-            joint.damper = 2f;
-            joint.massScale = 15f;
-            rb.angularDrag = 0f;
-
-            lr1.positionCount = 2;
-            lr2.positionCount = 2;
-
-            //playerRig.weight = 1;
-        }
-        else
-        {
-            if (Physics.SphereCast(camRight.position, aimSideSize, camRight.forward, out RaycastHit hitside, maxDistance, whatsIsGrappleable))
+            if (Physics.SphereCast(camera.position, aimSize, camera.forward, out hit, maxDistance, whatsIsGrappleable))
             {
-                grapplePoint = hitside.point;
+
+                grapplePoint = hit.point;
                 joint = player.gameObject.AddComponent<SpringJoint>();
                 joint.autoConfigureConnectedAnchor = false;
                 joint.connectedAnchor = grapplePoint;
 
                 float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
+
                 joint.maxDistance = distancefrompoint * maxdist;
                 joint.minDistance = distancefrompoint * 0.05f;
 
@@ -172,12 +188,17 @@ public class GrappleV2 : MonoBehaviour
 
                 lr1.positionCount = 2;
                 lr2.positionCount = 2;
+
+                isgrappling = true;
+
+                //playerRig.weight = 1;
             }
             else
             {
-                if (Physics.SphereCast(camLeft.position, aimSideSize, camLeft.forward, out RaycastHit hitsideL, maxDistance, whatsIsGrappleable))
+                if (Physics.SphereCast(camRight.position, aimSideSize, camRight.forward, out RaycastHit hitside, maxDistance, whatsIsGrappleable))
                 {
-                    grapplePoint = hitsideL.point;
+
+                    grapplePoint = hitside.point;
                     joint = player.gameObject.AddComponent<SpringJoint>();
                     joint.autoConfigureConnectedAnchor = false;
                     joint.connectedAnchor = grapplePoint;
@@ -193,9 +214,41 @@ public class GrappleV2 : MonoBehaviour
 
                     lr1.positionCount = 2;
                     lr2.positionCount = 2;
+
+                    isgrappling = true;
+                }
+                else
+                {
+                    if (Physics.SphereCast(camLeft.position, aimSideSize, camLeft.forward, out RaycastHit hitsideL, maxDistance, whatsIsGrappleable))
+                    {
+
+                        grapplePoint = hitsideL.point;
+                        joint = player.gameObject.AddComponent<SpringJoint>();
+                        joint.autoConfigureConnectedAnchor = false;
+                        joint.connectedAnchor = grapplePoint;
+
+                        float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
+                        joint.maxDistance = distancefrompoint * maxdist;
+                        joint.minDistance = distancefrompoint * 0.05f;
+
+                        joint.spring = 5f;
+                        joint.damper = 2f;
+                        joint.massScale = 15f;
+                        rb.angularDrag = 0f;
+
+                        lr1.positionCount = 2;
+                        lr2.positionCount = 2;
+                        isgrappling = true;
+
+                    }
+                    else
+                    {
+                        isgrappling = false;
+                    }
                 }
             }
         }
+
         
     }
     void DoubleGrappleStart()
