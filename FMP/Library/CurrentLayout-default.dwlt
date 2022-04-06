@@ -19,9 +19,9 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Scene
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 30
@@ -116,10 +116,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 678, y: 492}
-  m_MaxSize: {x: 18001, y: 14042}
+  m_MinSize: {x: 679, y: 492}
+  m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 19
+  controlID: 51
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -142,9 +142,9 @@ MonoBehaviour:
     width: 1297
     height: 947
   m_MinSize: {x: 403, y: 492}
-  m_MaxSize: {x: 14001, y: 14042}
+  m_MaxSize: {x: 14003, y: 14042}
   vertical: 1
-  controlID: 132
+  controlID: 62
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 133
+  controlID: 63
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,10 +247,10 @@ MonoBehaviour:
     y: 635
     width: 1297
     height: 312
-  m_MinSize: {x: 331, y: 271}
-  m_MaxSize: {x: 14001, y: 10021}
+  m_MinSize: {x: 333, y: 271}
+  m_MaxSize: {x: 14003, y: 10021}
   vertical: 0
-  controlID: 91
+  controlID: 20
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -298,8 +298,8 @@ MonoBehaviour:
     y: 0
     width: 562
     height: 312
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 23}
   m_Panes:
   - {fileID: 23}
@@ -325,8 +325,8 @@ MonoBehaviour:
     y: 0
     width: 623
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 25}
   m_Panes:
   - {fileID: 25}
@@ -450,10 +450,10 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 120}
-      m_SelectedIDs: cc6200005a620000
-      m_LastClickedID: 25178
-      m_ExpandedIDs: b254ffff56fbffffa66000008a6100009661000018620000446200004c620000c062000034630000686300007a630000
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: f8600000
+      m_LastClickedID: 24824
+      m_ExpandedIDs: 56fbffffa660000098610000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -6001,9 +6001,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.4540083, y: -0.899066, z: -18.018929}
+    m_Target: {x: 2.1998892, y: -3.0532763, z: -23.423199}
     speed: 2
-    m_Value: {x: 1.4540083, y: -0.899066, z: -18.018929}
+    m_Value: {x: 2.1998892, y: -3.0532763, z: -23.423199}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -6050,13 +6050,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.0019690667, y: -0.9968808, z: 0.075216874, w: -0.026632316}
+    m_Target: {x: -0.0053255213, y: -0.9923175, z: 0.11543607, w: -0.04588909}
     speed: 2
-    m_Value: {x: -0.0019689268, y: -0.99681, z: 0.07521153, w: -0.026630424}
+    m_Value: {x: -0.005393914, y: -0.99206704, z: 0.11691544, w: -0.045877535}
   m_Size:
-    m_Target: 11.570699
+    m_Target: 13.320412
     speed: 2
-    m_Value: 11.570699
+    m_Value: 13.320412
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -6144,22 +6144,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Player/Mats
+    - Assets/Environment sprites
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 72
   m_LastFolders:
-  - Assets/Player/Mats
+  - Assets/Environment sprites
   m_LastFoldersGridSize: 72
   m_LastProjectPath: C:\Users\P.M\Documents\Elizeu College Files\FMP\FMP
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 36670000
-    m_LastClickedID: 26422
-    m_ExpandedIDs: 000000007e640000d666000000ca9a3b
+    m_SelectedIDs: 02660000
+    m_LastClickedID: 26114
+    m_ExpandedIDs: 000000008c6400000666000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -6187,7 +6187,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007e640000
+    m_ExpandedIDs: 000000008c640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -6218,18 +6218,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c62300002c550000ce550000d85e0000e05e0000826d00001e6a00006c570000b2550000661f0000de58000066710000aa55000068880000945b0000e29d0000585600003a560000ea5e0000821f000000000000d66900005c720000c6710000fe760000f46e00002c72000024a600000e2e00000471000002710000066a000090720000ce720000a0690000b4690000927200002ed100001a2e0000da720000dc72000040730000e87500001a300000486d0000507d0000f06b00005c7e00000a7d000012750000385401003e6b0000e0e100004a300000347c0000626f00005e6e0000c2760000a6760000bcda0000787200005681000002790000ac5f00000e2900008e2b0000322b0000582b0000706e00006c640000d26400003a650000529a0000ba750000587d000086650000e02a0000846400008a640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Player
-      m_OriginalName: Player
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 26326
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
@@ -6443,7 +6443,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 25292
+  m_LastSelectedObjectID: 24824
 --- !u!114 &24
 MonoBehaviour:
   m_ObjectHideFlags: 52
