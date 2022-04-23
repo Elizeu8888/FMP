@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28502667, g: 0.37139323, b: 0.49600998, a: 1}
+  m_IndirectSpecularColor: {r: 0.2850269, g: 0.3713935, b: 0.49601045, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -278,7 +278,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   isgrounded: 0
+  canPlayAnim: 0
   anim: {fileID: 2904107559219573200}
+  grappleScript: {fileID: 549508858}
 --- !u!1 &139683687
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,12 +980,17 @@ MonoBehaviour:
   grappleTip: {fileID: 1299816515}
   grappleTip2: {fileID: 223321514}
   rb: {fileID: 33570507}
-  swing: 0.7
-  pull: 0.1
+  swing: 1
+  pull: 1
   aimSize: 2
   aimSideSize: 4
   aimBlock: 1
+  isgrappling: 0
+  isgrappling2: 0
   anim: {fileID: 2904107559219573200}
+  pullSpeed: 300
+  upSpeed: 150
+  pullCloseDistance: 7
 --- !u!1 &584541628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,7 +1636,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877905553}
   m_LocalRotation: {x: 0.014818686, y: 0.8884925, z: 0.028763115, w: -0.45774895}
-  m_LocalPosition: {x: 0.00000047683716, y: -7.1054274e-15, z: 5.684342e-14}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1870330122}
@@ -2772,13 +2779,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1453880090}
-  m_LocalRotation: {x: -0.12360107, y: 0.000000029802315, z: -0.0000000018626447, w: 0.992332}
-  m_LocalPosition: {x: -0.00001335144, y: 1.0199964, z: 9.9700775}
+  m_LocalRotation: {x: -0.05791243, y: 0, z: 0, w: 0.9983217}
+  m_LocalPosition: {x: 0, y: 0, z: 9.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1687258585}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -14.2, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -6.64, y: 0, z: 0}
 --- !u!4 &1458599150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eb6a5bf3685845e4fa07a572deb8df55, type: 3}

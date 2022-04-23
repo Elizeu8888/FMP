@@ -16,11 +16,12 @@ public class PlayerWalk : MonoBehaviour
     public Transform groundcheck;
     public float grounddistance = 0.4f;
     public LayerMask groundmask;
-    public bool isgrounded;
+    public bool isgrounded, canPlayAnim;
 
     public Animator anim;
 
     Vector3 direction;
+    public GrappleV2 grappleScript;
 
     void Start()
     {
@@ -36,7 +37,7 @@ public class PlayerWalk : MonoBehaviour
         direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         Walk();
-        if(rb.velocity.sqrMagnitude > 0.2)
+        if (rb.velocity.sqrMagnitude > 0.2)
         {
             anim.SetBool("Walking", true);
         }
@@ -44,7 +45,7 @@ public class PlayerWalk : MonoBehaviour
         {
             anim.SetBool("Walking", false);
         }
-        if(isgrounded == false)
+        if (isgrounded == false)
         {
             anim.SetBool("Grounded", false);
         }
@@ -58,6 +59,14 @@ public class PlayerWalk : MonoBehaviour
     {
         isgrounded = Physics.CheckSphere(groundcheck.position, grounddistance, groundmask);
         Jump();
+        if (isgrounded == false && grappleScript.isgrappling == false && canPlayAnim == true)
+        {
+            anim.Play("fall start");
+            canPlayAnim = false;
+        }
+        if (isgrounded == true || grappleScript.isgrappling == true)
+            canPlayAnim = true;
+
     }
 
     void Walk()
@@ -72,11 +81,11 @@ public class PlayerWalk : MonoBehaviour
 
 
 
-         
-            
+
+
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetangle, ref turnsmoothvelocity, turnsmoothing);// makes it so the player faces its movement direction
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            
+
 
 
 

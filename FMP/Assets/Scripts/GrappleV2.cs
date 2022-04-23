@@ -5,12 +5,12 @@ using UnityEngine.Animations.Rigging;
 
 public class GrappleV2 : MonoBehaviour
 {
-    public LineRenderer lr1,lr2;
+    public LineRenderer lr1, lr2;
     Vector3 grapplePoint;
     Vector3 grappleAimPoint;
     public LayerMask whatsIsGrappleable;
     public LayerMask notGrappleable;
-    public Transform camera,camLeft,camRight, player;
+    public Transform camera, camLeft, camRight, player;
     public float maxDistance;
     SpringJoint joint;
     public Rig playerRig;
@@ -22,11 +22,11 @@ public class GrappleV2 : MonoBehaviour
 
     public float aimSize = 10f, aimSideSize = 2f, aimBlock = 3f;
 
-    bool isgrappling = false, isgrappling2 = false;
+    public bool isgrappling = false, isgrappling2 = false;
 
     public Animator anim;
     bool grappleMode = false, canGrapple = false;
-
+    public float pullSpeed, upSpeed, pullCloseDistance;
 
     void Start()
     {
@@ -35,12 +35,12 @@ public class GrappleV2 : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             grappleMode = !grappleMode;
         }
 
-        if(isgrappling == true || isgrappling2 == true)
+        if (isgrappling == true || isgrappling2 == true)
         {
             anim.SetBool("Grappling", true);
         }
@@ -68,17 +68,27 @@ public class GrappleV2 : MonoBehaviour
                 isgrappling = false;
 
             }
-            if (Input.GetMouseButtonDown(0) && isgrappling == false)
+            if (Input.GetMouseButton(0) && isgrappling == true)
             {
-                StartGrapple(swing);
-                isgrappling2 = true;
+                float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
+
+                if (distancefrompoint > pullCloseDistance)
+                {
+                    rb.AddForce((grapplePoint - transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.Impulse);
+                    rb.AddForce(transform.up * upSpeed * Time.deltaTime, ForceMode.Impulse);
+                }
+                else
+                {
+                    StopGrapple();
+                    //playerRig.weight = 0;
+                    isgrappling = false;
+                    rb.AddForce((grapplePoint - transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.Impulse);
+                    rb.AddForce(transform.up * upSpeed * Time.deltaTime, ForceMode.Impulse);
+                }
+
 
             }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                StopGrapple();
-                isgrappling2 = false;
-            }
+
 
 
             if (Physics.SphereCast(camera.position, aimSize, camera.forward, out RaycastHit aimhit, maxDistance, whatsIsGrappleable))
@@ -144,7 +154,7 @@ public class GrappleV2 : MonoBehaviour
 
 
             }
-            
+
         }
         else
         {
@@ -166,7 +176,7 @@ public class GrappleV2 : MonoBehaviour
     void StartGrapple(float maxdist)
     {
         RaycastHit hit;
-        if(canGrapple == true)
+        if (canGrapple == true)
         {
             if (Physics.SphereCast(camera.position, aimSize, camera.forward, out hit, maxDistance, whatsIsGrappleable))
             {
@@ -206,6 +216,11 @@ public class GrappleV2 : MonoBehaviour
                     float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
                     joint.maxDistance = distancefrompoint * maxdist;
                     joint.minDistance = distancefrompoint * 0.05f;
+
+
+
+
+
 
                     joint.spring = 5f;
                     joint.damper = 2f;
@@ -249,11 +264,11 @@ public class GrappleV2 : MonoBehaviour
             }
         }
 
-        
+
     }
     void DoubleGrappleStart()
     {
-        if(Physics.SphereCast(camera.transform.position,aimSize,camera.transform.forward, out RaycastHit raycastHit,maxDistance,whatsIsGrappleable))
+        if (Physics.SphereCast(camera.transform.position, aimSize, camera.transform.forward, out RaycastHit raycastHit, maxDistance, whatsIsGrappleable))
         {
 
         }
