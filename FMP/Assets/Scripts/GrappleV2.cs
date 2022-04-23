@@ -74,11 +74,13 @@ public class GrappleV2 : MonoBehaviour
 
                 if (distancefrompoint > pullCloseDistance)
                 {
+                    rb.useGravity = false;
                     rb.AddForce((grapplePoint - transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.Impulse);
                     rb.AddForce(transform.up * upSpeed * Time.deltaTime, ForceMode.Impulse);
                 }
                 else
                 {
+                    rb.useGravity = true;
                     StopGrapple();
                     //playerRig.weight = 0;
                     isgrappling = false;
@@ -88,6 +90,11 @@ public class GrappleV2 : MonoBehaviour
 
 
             }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                rb.useGravity = true;
+            }
+
 
 
 
