@@ -18,7 +18,7 @@ public class PlayerWalk : MonoBehaviour
     public LayerMask groundmask;
     public bool isgrounded, canPlayAnim;
 
-    public Animator anim;
+    public Animator anim,golAnim;
 
     Vector3 direction;
     public GrappleV2 grappleScript;
@@ -36,7 +36,7 @@ public class PlayerWalk : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");// uses imput to find direction
         direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        Walk();
+        
         if (rb.velocity.sqrMagnitude > 0.2)
         {
             anim.SetBool("Walking", true);
@@ -48,10 +48,12 @@ public class PlayerWalk : MonoBehaviour
         if (isgrounded == false)
         {
             anim.SetBool("Grounded", false);
+            golAnim.SetBool("Grounded", false);
         }
         else
         {
             anim.SetBool("Grounded", true);
+            golAnim.SetBool("Grounded", true);
         }
     }
 
@@ -66,7 +68,7 @@ public class PlayerWalk : MonoBehaviour
         }
         if (isgrounded == true || grappleScript.isgrappling == true)
             canPlayAnim = true;
-
+        Walk();
     }
 
     void Walk()

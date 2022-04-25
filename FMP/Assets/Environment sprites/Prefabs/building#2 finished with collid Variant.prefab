@@ -249,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d9406f1f80409ef4f812099c602f1815, type: 2}
     - target: {fileID: 919132149155446097, guid: cf55e1da6bed0db409bbf0719f12e002, type: 3}
       propertyPath: m_Name
-      value: building#2 finished with collid
+      value: building#2 finished with collid Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cf55e1da6bed0db409bbf0719f12e002, type: 3}
       propertyPath: m_Layer
@@ -361,7 +361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8486811040597491246, guid: cf55e1da6bed0db409bbf0719f12e002, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8547605042012379383, guid: cf55e1da6bed0db409bbf0719f12e002, type: 3}
       propertyPath: m_Materials.Array.data[0]

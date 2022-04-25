@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GrappleV2 : MonoBehaviour
 {
+
+    public Volume ppVol;
+
     public LineRenderer lr1, lr2;
     Vector3 grapplePoint;
     Vector3 grappleAimPoint;
@@ -15,7 +20,7 @@ public class GrappleV2 : MonoBehaviour
     SpringJoint joint;
     public Rig playerRig;
     //public Animator anim;
-    public GameObject grapplepoint, grappleTip, grappleTip2;
+    public GameObject grapplepoint, grappleTip, grappleTip2,golem, grappleHook;
     public Rigidbody rb;
 
     public float swing = 0.8f, pull = 0.05f;
@@ -24,7 +29,7 @@ public class GrappleV2 : MonoBehaviour
 
     public bool isgrappling = false, isgrappling2 = false;
 
-    public Animator anim;
+    public Animator anim, golAnim;
     bool grappleMode = false, canGrapple = false;
     public float pullSpeed, upSpeed, pullCloseDistance;
 
@@ -43,10 +48,15 @@ public class GrappleV2 : MonoBehaviour
         if (isgrappling == true || isgrappling2 == true)
         {
             anim.SetBool("Grappling", true);
+            golAnim.SetBool("Grappling", true);
+
+
+
         }
         else
         {
             anim.SetBool("Grappling", false);
+            golAnim.SetBool("Grappling", false);
         }
 
 
@@ -64,36 +74,11 @@ public class GrappleV2 : MonoBehaviour
             else if (Input.GetMouseButtonUp(1))
             {
                 StopGrapple();
-                //playerRig.weight = 0;
+                playerRig.weight = 0;
                 isgrappling = false;
 
             }
-            if (Input.GetMouseButton(0) && isgrappling == true)
-            {
-                float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
-
-                if (distancefrompoint > pullCloseDistance)
-                {
-                    rb.useGravity = false;
-                    rb.AddForce((grapplePoint - transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.Impulse);
-                    rb.AddForce(transform.up * upSpeed * Time.deltaTime, ForceMode.Impulse);
-                }
-                else
-                {
-                    rb.useGravity = true;
-                    StopGrapple();
-                    //playerRig.weight = 0;
-                    isgrappling = false;
-                    rb.AddForce((grapplePoint - transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.Impulse);
-                    rb.AddForce(transform.up * upSpeed * Time.deltaTime, ForceMode.Impulse);
-                }
-
-
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                rb.useGravity = true;
-            }
+            
 
 
 
@@ -171,10 +156,48 @@ public class GrappleV2 : MonoBehaviour
 
         }
 
-
+        if (Input.GetMouseButtonUp(0))
+        {
+            rb.useGravity = true;
+        }
 
     }
+    void FixedUpdate()
+    {
 
+
+
+
+        if (Input.GetMouseButton(0) && isgrappling == true)
+        {
+            float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
+
+            if (distancefrompoint > pullCloseDistance)
+            {
+                rb.useGravity = false;
+                rb.AddForce((grapplePoint - transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.Impulse);
+                rb.AddForce(transform.up * upSpeed * Time.deltaTime, ForceMode.Impulse);
+                LensDistortion lens;
+                ppVol.profile.TryGet(out lens);
+                lens.intensity.value = -0.15f;
+            }
+            else
+            {
+                LensDistortion lens;
+                ppVol.profile.TryGet(out lens);
+                lens.intensity.value = 0f;
+                rb.useGravity = true;
+                StopGrapple();
+                playerRig.weight = 0;
+                isgrappling = false;
+                rb.AddForce((grapplePoint - transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.Impulse);
+                rb.AddForce(transform.up * upSpeed * Time.deltaTime, ForceMode.Impulse);
+            }
+
+
+        }
+
+    }
     void LateUpdate()
     {
         DrawRope();
@@ -194,6 +217,8 @@ public class GrappleV2 : MonoBehaviour
                 joint.connectedAnchor = grapplePoint;
 
                 float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
+                grappleHook.SetActive(true);
+                grappleHook.transform.position = grapplePoint;
 
                 joint.maxDistance = distancefrompoint * maxdist;
                 joint.minDistance = distancefrompoint * 0.05f;
@@ -208,7 +233,7 @@ public class GrappleV2 : MonoBehaviour
 
                 isgrappling = true;
 
-                //playerRig.weight = 1;
+                playerRig.weight = 1;
             }
             else
             {
@@ -226,8 +251,9 @@ public class GrappleV2 : MonoBehaviour
 
 
 
-
-
+                    grappleHook.SetActive(true);
+                    grappleHook.transform.position = grapplePoint;
+                    playerRig.weight = 1;
 
                     joint.spring = 5f;
                     joint.damper = 2f;
@@ -250,6 +276,8 @@ public class GrappleV2 : MonoBehaviour
                         joint.connectedAnchor = grapplePoint;
 
                         float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
+                        grappleHook.SetActive(true);
+                        grappleHook.transform.position = grapplePoint;
                         joint.maxDistance = distancefrompoint * maxdist;
                         joint.minDistance = distancefrompoint * 0.05f;
 
@@ -257,7 +285,7 @@ public class GrappleV2 : MonoBehaviour
                         joint.damper = 2f;
                         joint.massScale = 15f;
                         rb.angularDrag = 0f;
-
+                        playerRig.weight = 1;
                         lr1.positionCount = 2;
                         lr2.positionCount = 2;
                         isgrappling = true;
@@ -266,6 +294,7 @@ public class GrappleV2 : MonoBehaviour
                     else
                     {
                         isgrappling = false;
+                        grappleHook.SetActive(false);
                     }
                 }
             }
@@ -297,6 +326,8 @@ public class GrappleV2 : MonoBehaviour
         lr1.positionCount = 0;
         lr2.positionCount = 0;
         Destroy(joint);
+        grappleHook.SetActive(false);
+        playerRig.weight = 0;
     }
 
     public bool IsGrappling()
