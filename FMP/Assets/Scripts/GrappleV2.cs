@@ -165,7 +165,7 @@ public class GrappleV2 : MonoBehaviour
     void FixedUpdate()
     {
 
-
+        anim.SetFloat("Yrise", rb.velocity.y);
 
 
         if (Input.GetMouseButton(0) && isgrappling == true)
