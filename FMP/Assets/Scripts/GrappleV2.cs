@@ -31,7 +31,7 @@ public class GrappleV2 : MonoBehaviour
 
     public Animator anim, golAnim;
     bool grappleMode = false, canGrapple = false;
-    public float pullSpeed, upSpeed, pullCloseDistance;
+    public float pullSpeed, upSpeed, pullCloseDistance, lensValue;
 
     void Start()
     {
@@ -177,13 +177,13 @@ public class GrappleV2 : MonoBehaviour
                 rb.useGravity = false;
                 rb.AddForce((grapplePoint - transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.Impulse);
                 rb.AddForce(transform.up * upSpeed * Time.deltaTime, ForceMode.Impulse);
-                LensDistortion lens;
+                ChromaticAberration lens;
                 ppVol.profile.TryGet(out lens);
-                lens.intensity.value = -0.15f;
+                lens.intensity.value = lensValue;
             }
             else
             {
-                LensDistortion lens;
+                ChromaticAberration lens;
                 ppVol.profile.TryGet(out lens);
                 lens.intensity.value = 0f;
                 rb.useGravity = true;
@@ -196,11 +196,17 @@ public class GrappleV2 : MonoBehaviour
 
 
         }
+        else
+        {
+            ChromaticAberration lens;
+            ppVol.profile.TryGet(out lens);
+            lens.intensity.value = 0f;
+        }
 
     }
     void LateUpdate()
     {
-        DrawRope();
+        //DrawRope();
     }
 
     void StartGrapple(float maxdist)
@@ -228,8 +234,8 @@ public class GrappleV2 : MonoBehaviour
                 joint.massScale = 15f;
                 rb.angularDrag = 0f;
 
-                lr1.positionCount = 2;
-                lr2.positionCount = 2;
+                //lr1.positionCount = 2;
+                //lr2.positionCount = 2;
 
                 isgrappling = true;
 
@@ -260,8 +266,8 @@ public class GrappleV2 : MonoBehaviour
                     joint.massScale = 15f;
                     rb.angularDrag = 0f;
 
-                    lr1.positionCount = 2;
-                    lr2.positionCount = 2;
+                    //lr1.positionCount = 2;
+                    //lr2.positionCount = 2;
 
                     isgrappling = true;
                 }
@@ -286,8 +292,8 @@ public class GrappleV2 : MonoBehaviour
                         joint.massScale = 15f;
                         rb.angularDrag = 0f;
                         playerRig.weight = 1;
-                        lr1.positionCount = 2;
-                        lr2.positionCount = 2;
+                        //lr1.positionCount = 2;
+                        //lr2.positionCount = 2;
                         isgrappling = true;
 
                     }
@@ -310,21 +316,21 @@ public class GrappleV2 : MonoBehaviour
         }
     }
 
-    void DrawRope()
+    /*void DrawRope()
     {
         if (!joint) return;
         lr1.SetPosition(0, grappleTip.transform.position);
         lr1.SetPosition(1, grapplePoint);
         lr2.SetPosition(0, grappleTip2.transform.position);
         lr2.SetPosition(1, grapplePoint);
-    }
+    }*/
 
 
 
     void StopGrapple()
     {
-        lr1.positionCount = 0;
-        lr2.positionCount = 0;
+        //lr1.positionCount = 0;
+        //lr2.positionCount = 0;
         Destroy(joint);
         grappleHook.SetActive(false);
         playerRig.weight = 0;
