@@ -32,6 +32,8 @@ public class GrappleV2 : MonoBehaviour
     public Animator anim, golAnim;
     bool grappleMode = false, canGrapple = false;
     public float pullSpeed, upSpeed, pullCloseDistance, lensValue;
+    bool canPlayAnim;
+
 
     void Start()
     {
@@ -162,15 +164,21 @@ public class GrappleV2 : MonoBehaviour
         }
 
     }
+
+
     void FixedUpdate()
     {
-
+        float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
         anim.SetFloat("Yrise", rb.velocity.y);
-
+        if (Input.GetMouseButton(0) && distancefrompoint <= pullCloseDistance && canPlayAnim == true)
+        {
+            anim.Play("flip");
+            canPlayAnim = false;
+        }
 
         if (Input.GetMouseButton(0) && isgrappling == true)
         {
-            float distancefrompoint = Vector3.Distance(player.position, grapplePoint);
+            
 
             if (distancefrompoint > pullCloseDistance)
             {
@@ -180,6 +188,7 @@ public class GrappleV2 : MonoBehaviour
                 ChromaticAberration lens;
                 ppVol.profile.TryGet(out lens);
                 lens.intensity.value = lensValue;
+                canPlayAnim = true;
             }
             else
             {

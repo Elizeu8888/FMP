@@ -61,7 +61,7 @@ public class PlayerWalk : MonoBehaviour
     {
         isgrounded = Physics.CheckSphere(groundcheck.position, grounddistance, groundmask);
         Jump();
-        if (isgrounded == false && grappleScript.isgrappling == false && canPlayAnim == true)
+        if (isgrounded == false && grappleScript.isgrappling == false && canPlayAnim == true && !anim.GetCurrentAnimatorStateInfo(0).IsName("flip"))
         {
             anim.Play("fall start");
             canPlayAnim = false;
