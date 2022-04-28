@@ -176,6 +176,13 @@ public class GrappleV2 : MonoBehaviour
             canPlayAnim = false;
         }
 
+        if(isgrappling == false)
+        {
+            rb.useGravity = true;
+        }
+
+
+
         if (Input.GetMouseButton(0) && isgrappling == true)
         {
             

@@ -7,6 +7,7 @@ public class PlayerWalk : MonoBehaviour
     public Rigidbody rb;
     public Transform cam;
     public float speed = 6f;
+    public float runSpeed;
     public float jumpheight = 8f;
     float turnsmoothing = 0.1f;
     float turnsmoothvelocity = 0.5f;
@@ -37,14 +38,7 @@ public class PlayerWalk : MonoBehaviour
         direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         
-        if (rb.velocity.sqrMagnitude > 0.2)
-        {
-            anim.SetBool("Walking", true);
-        }
-        else
-        {
-            anim.SetBool("Walking", false);
-        }
+
         if (isgrounded == false)
         {
             anim.SetBool("Grounded", false);
@@ -68,10 +62,32 @@ public class PlayerWalk : MonoBehaviour
         }
         if (isgrounded == true || grappleScript.isgrappling == true)
             canPlayAnim = true;
-        Walk();
+
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            maxVelocity = runSpeed;
+            Walk(runSpeed);
+            anim.SetFloat("Speed", 1f);
+        }
+        else
+        {
+            maxVelocity = speed;
+            Walk(speed);
+            anim.SetFloat("Speed", 0f);
+
+        }
+        if (rb.velocity.sqrMagnitude > 0.2)
+        {
+            anim.SetBool("Walking", true);
+        }
+        else
+        {
+            anim.SetBool("Walking", false);
+        }
+
     }
 
-    void Walk()
+    void Walk(float speedIn)
     {
         if (direction.magnitude >= 0.1f)
         {
@@ -96,7 +112,7 @@ public class PlayerWalk : MonoBehaviour
 
 
             Vector3 movedir = Quaternion.Euler(0f, targetangle, 0f) * Vector3.forward;// here is the movement
-            rb.AddForce(movedir.normalized * speed * Time.deltaTime, ForceMode.Impulse);
+            rb.AddForce(movedir.normalized * speedIn * Time.deltaTime, ForceMode.Impulse);
         }
         else
         {
