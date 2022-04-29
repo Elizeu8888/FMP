@@ -14,6 +14,20 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4779445219601754069, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
+--- !u!64 &1635351687264149407
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8414434469413080290}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6369055353137147297, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
 --- !u!1001 &6507440641744766945
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,6 +127,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: d9406f1f80409ef4f812099c602f1815, type: 2}
+    - target: {fileID: -1813404343238891747, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1536997628473030342, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -123,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
       propertyPath: m_Name
-      value: building#1
+      value: building#1 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
       propertyPath: m_Layer
@@ -149,6 +167,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d9406f1f80409ef4f812099c602f1815, type: 2}
+    - target: {fileID: 3353212876482956035, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5049575624999095329, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -182,5 +204,10 @@ PrefabInstance:
 --- !u!1 &771529732295419161 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3388372692729208072, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
+  m_PrefabInstance: {fileID: 6507440641744766945}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8414434469413080290 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3353212876482956035, guid: 1cd03fa01d2ced545914e6c2a9af6d09, type: 3}
   m_PrefabInstance: {fileID: 6507440641744766945}
   m_PrefabAsset: {fileID: 0}
