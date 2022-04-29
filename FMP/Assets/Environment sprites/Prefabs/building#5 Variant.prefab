@@ -139,6 +139,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -3388372692729208072, guid: 90ee2355a1a55ce47a855cf8cb1ec4f2, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3388372692729208072, guid: 90ee2355a1a55ce47a855cf8cb1ec4f2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: -3354453053368413886, guid: 90ee2355a1a55ce47a855cf8cb1ec4f2, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -181,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d9406f1f80409ef4f812099c602f1815, type: 2}
     - target: {fileID: 919132149155446097, guid: 90ee2355a1a55ce47a855cf8cb1ec4f2, type: 3}
       propertyPath: m_Name
-      value: building#5
+      value: building#5 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 90ee2355a1a55ce47a855cf8cb1ec4f2, type: 3}
       propertyPath: m_Layer
