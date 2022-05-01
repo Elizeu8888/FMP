@@ -347,6 +347,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
 "Assets/CopyPOS_ROT.cs"
 "Assets/Scripts/Billboard.cs"
+"Assets/Scripts/CinemaCam.cs"
 "Assets/Scripts/Destructable.cs"
 "Assets/Scripts/EnemyAI.cs"
 "Assets/Scripts/EventSwitch.cs"
@@ -357,7 +358,6 @@
 "Assets/Scripts/PlayerWalk.cs"
 "Assets/Scripts/PlayerWeaponManager.cs"
 "Assets/Scripts/Spring.cs"
-"Assets/Scripts/ThirdCam.cs"
 "Assets/Scripts/Weapon.cs"
 -langversion:8.0
 

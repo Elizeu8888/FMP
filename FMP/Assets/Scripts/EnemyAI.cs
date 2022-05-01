@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
 
     Transform player;
+    Rigidbody rigidB;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -14,7 +15,7 @@ public class EnemyAI : MonoBehaviour
 
     public int currentHealth,maxHealth;
     //public Healthbar healthbar;
-    //public Animator anim;
+    public Animator anim;
 
     //Patroling
     public Vector3 walkPoint;
@@ -33,6 +34,7 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("player").transform;
+        rigidB = gameObject.GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
     }
     void Start()
@@ -42,11 +44,24 @@ public class EnemyAI : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        //currentHealth -= damage;
-        //if (currentHealth <= 0) anim.Play("dead");
+        currentHealth -= damage;
+        anim.Play("hurt");
+        if (currentHealth <= 0) anim.Play("dead");
     }
     private void Update()
     {
+        if(rigidB.velocity.magnitude <= 0.1)
+        {
+            anim.SetBool("walking", true);
+        }
+        else
+        {
+            anim.SetBool("walking", false);
+
+        }
+
+
+
         //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -55,11 +70,11 @@ public class EnemyAI : MonoBehaviour
         if (playerInSightRange && !playerInAttackRange)
         {
             ChasePlayer();
-            //anim.SetBool("chasing", true);
+            anim.SetFloat("speed", 1);
         }
         else
         {
-            //anim.SetBool("chasing", false);
+            anim.SetFloat("speed", 0);
         }
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
     }
@@ -108,20 +123,28 @@ public class EnemyAI : MonoBehaviour
 
         transform.LookAt(player);
 
-        if (!alreadyAttacked)
+        if (!alreadyAttacked && !anim.GetCurrentAnimatorStateInfo(0).IsName("hurt"))
         {
-            ///Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            Destroy(rb.gameObject, 2f);
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            ///End of attack code
-
+            anim.Play("spit");
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
          
     }
+
+
+    public void ShootSlime()
+    {
+        ///Attack code here
+        Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        Destroy(rb.gameObject, 2f);
+        rb.AddForce(transform.forward * 64f, ForceMode.Impulse);
+        rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+        ///End of attack code
+    }
+
+
+
     private void ResetAttack()
     {
         alreadyAttacked = false;
