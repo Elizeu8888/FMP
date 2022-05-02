@@ -5,15 +5,16 @@ using UnityEngine;
 public class CinemaCam : MonoBehaviour
 {
     Cinemachine.CinemachineFreeLook freeCamera;
-    [SerializeField] Transform target;
+    public Transform target;
+    public Transform player;
 
     private void Awake()
     {
         freeCamera = GetComponent<Cinemachine.CinemachineFreeLook>();
     }
-    private void Start()
+    private void FixedUpdate()
     {
-        freeCamera.m_LookAt = target.transform;
+        freeCamera.m_LookAt = player.transform;
         freeCamera.m_Follow = target.transform;
     }
 }
