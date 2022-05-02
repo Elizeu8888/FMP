@@ -6,7 +6,10 @@ public class EnemyAI : MonoBehaviour
     public int state;
     public NavMeshAgent agent;
 
+    bool ishurt;
+
     Transform player;
+    public Transform lips;
     Rigidbody rigidB;
 
     public LayerMask whatIsGround, whatIsPlayer;
@@ -34,7 +37,7 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("player").transform;
-        rigidB = gameObject.GetComponent<Rigidbody>();
+        rigidB = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
     }
     void Start()
@@ -44,12 +47,38 @@ public class EnemyAI : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        anim.Play("hurt");
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("dead"))
+        {
+            currentHealth -= damage;
+            anim.Play("hurt");
+        }
+
         if (currentHealth <= 0) anim.Play("dead");
     }
     private void Update()
     {
+
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName("hurt"))
+        {
+            //agent.enabled = false;
+            rigidB.isKinematic = false;
+            agent.updatePosition = false;
+            rigidB.AddForce(transform.forward * -52f * Time.deltaTime, ForceMode.Impulse);
+            rigidB.AddForce(transform.up * 32f * Time.deltaTime, ForceMode.Impulse);
+            //agent.velocity = rigidB.velocity;
+            ishurt = true;
+            
+        }
+        else
+        {
+            agent.updatePosition = true;
+            ishurt = false;
+            //agent.enabled = true;
+            rigidB.isKinematic = true;
+        }
+
+
+
         if(rigidB.velocity.magnitude <= 0.1)
         {
             anim.SetBool("walking", true);
@@ -90,7 +119,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!walkPointSet) SearchWalkPoint();
 
-        if (walkPointSet)
+        if (walkPointSet && ishurt == false)
             agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -113,18 +142,23 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        if (ishurt == false)
+            agent.SetDestination(player.position);
     }
 
     private void AttackPlayer()
     {
-        //Make sure enemy doesn't move
-        agent.SetDestination(transform.position);
+      
+
 
         transform.LookAt(player);
 
-        if (!alreadyAttacked && !anim.GetCurrentAnimatorStateInfo(0).IsName("hurt"))
+        if (!alreadyAttacked && !anim.GetCurrentAnimatorStateInfo(0).IsName("hurt") && !anim.GetCurrentAnimatorStateInfo(0).IsName("dead"))
         {
+            //Make sure enemy doesn't move
+            if (ishurt == false)
+                agent.SetDestination(transform.position);
+
             anim.Play("spit");
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
@@ -136,7 +170,7 @@ public class EnemyAI : MonoBehaviour
     public void ShootSlime()
     {
         ///Attack code here
-        Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+        Rigidbody rb = Instantiate(projectile, lips.position, Quaternion.identity).GetComponent<Rigidbody>();
         Destroy(rb.gameObject, 2f);
         rb.AddForce(transform.forward * 64f, ForceMode.Impulse);
         rb.AddForce(transform.up * 8f, ForceMode.Impulse);
