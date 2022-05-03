@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerWalk : MonoBehaviour
 {
-    bool attacking;
+    public bool attacking;
     public Rigidbody rb;
     public Transform cam, camAIM;
 

@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public GameObject bullet, damageText;
+    public GameObject bullet, damageText, bloodSplat;
 
 
     public int currentHealth,maxHealth;
@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject projectile;
+    public GameObject projectile, slimespit;
 
     //States
     public float sightRange, attackRange;
@@ -61,6 +61,8 @@ public class EnemyAI : MonoBehaviour
             currentHealth -= damage;
             DamageIndicator indicator = Instantiate(damageText, transform.position, Quaternion.identity).GetComponent<DamageIndicator>();
             indicator.SetDamageText(damage);
+            GameObject bloodyblood = Instantiate(bloodSplat, transform.position, Quaternion.identity);
+            Destroy(bloodyblood, 2);
             anim.Play("hurt");
         }
 
@@ -130,7 +132,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!walkPointSet) SearchWalkPoint();
 
-        if (walkPointSet && ishurt == false)
+        if (walkPointSet)
             agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
@@ -153,8 +155,8 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        if (ishurt == false)
-            agent.SetDestination(player.position);
+        //if (ishurt == false)
+        agent.SetDestination(player.position);
     }
 
     private void AttackPlayer()
@@ -167,8 +169,8 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked && !anim.GetCurrentAnimatorStateInfo(0).IsName("hurt") && !anim.GetCurrentAnimatorStateInfo(0).IsName("dead"))
         {
             //Make sure enemy doesn't move
-            if (ishurt == false)
-                agent.SetDestination(transform.position);
+            //if (ishurt == false)
+            agent.SetDestination(transform.position);
 
             anim.Play("spit");
             alreadyAttacked = true;
@@ -182,6 +184,8 @@ public class EnemyAI : MonoBehaviour
     {
         ///Attack code here
         Rigidbody rb = Instantiate(projectile, lips.position, Quaternion.identity).GetComponent<Rigidbody>();
+        GameObject slimeSpit = Instantiate(slimespit, lips.position, Quaternion.identity);
+        Destroy(slimeSpit, 2);
         Destroy(rb.gameObject, 2f);
         rb.AddForce(transform.forward * 64f, ForceMode.Impulse);
         rb.AddForce(transform.up * 8f, ForceMode.Impulse);

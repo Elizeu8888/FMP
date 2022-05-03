@@ -20,11 +20,12 @@ public class PlayerWeaponManager : MonoBehaviour
 
     bool comboPossible;
     int comboStep;
+    PlayerWalk playerScript;
 
 
     void Start()
     {
-
+        playerScript = GetComponent<PlayerWalk>();
         weaponList = new Weapon[50];
 
         weaponList[0] = new Weapon();
@@ -58,9 +59,9 @@ public class PlayerWeaponManager : MonoBehaviour
             weapondrawn = !weapondrawn;
             
         }
-           
 
-        if(weaponMenu.activeSelf)           
+
+        if (weaponMenu.activeSelf)           
             Cursor.lockState = CursorLockMode.Confined;
         else
             Cursor.lockState = CursorLockMode.Locked;
@@ -166,7 +167,7 @@ public class PlayerWeaponManager : MonoBehaviour
         
     public void RunicRedraw()
     {
-        Destroy(weapon);
+        Destroy(weapon);      
     }
         
     public void LayerWeight()

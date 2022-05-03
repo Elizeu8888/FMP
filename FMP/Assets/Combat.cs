@@ -10,7 +10,7 @@ public class Combat : MonoBehaviour
     GrappleV2 grapScript;
     EnemyAI enemyScript;
     public CameraLock cameraScript;
-    RaycastHit rayHit;
+    public RaycastHit rayHit;
     float distance;
     public bool isLocked;
     public GameObject cinemachine;
@@ -20,18 +20,11 @@ public class Combat : MonoBehaviour
     void Start()
     {
         grapScript = GetComponent<GrappleV2>();
-        if(Physics.SphereCast(cam.position, 3, cam.forward, out rayHit, 29, blocklayer))
-        {
-
-        }
     }
 
     public void Deadagainlol()
     {
-        if (Physics.SphereCast(cam.position, 3, cam.forward, out rayHit, 29, blocklayer))
-        {
 
-        }
     }
 
 
@@ -43,8 +36,6 @@ public class Combat : MonoBehaviour
         {
             isLocked = false;
             cinemachine.SetActive(true);
-
-            //cameraScript.target = gameObject.transform;
         }
 
         if (Input.GetKeyDown("t") && Physics.SphereCast(cam.position, 3, cam.forward, out rayHit, 29, blocklayer))
@@ -59,22 +50,26 @@ public class Combat : MonoBehaviour
             }
 
         }
-
-
-        if (rayHit.transform.gameObject != null)
+        else if (Physics.SphereCast(cam.position, 3, cam.forward, out rayHit, 29, blocklayer))
         {
-            distance = Vector3.Distance(transform.position, rayHit.transform.gameObject.transform.position);
-            if (rayHit.transform.gameObject.GetComponent<EnemyAI>() != null)
+            if (rayHit.transform.gameObject.tag == "enemy")
             {
-                if(rayHit.transform.gameObject.GetComponent<EnemyAI>().currentHealth <= 0)
-                    cinemachine.SetActive(true);
+                distance = Vector3.Distance(transform.position, rayHit.transform.gameObject.transform.position);
+                if (rayHit.transform.gameObject.GetComponent<EnemyAI>() != null)
+                {
+                    if (rayHit.transform.gameObject.GetComponent<EnemyAI>().currentHealth <= 0)
+                        cinemachine.SetActive(true);
+                }
+            }
+            else
+            {
+                //Debug.Log("no enemy target?");
+                cinemachine.SetActive(true);
             }
         }
-        else
-        {
-            Debug.Log("no enemy target?");
-            cinemachine.SetActive(true);
-        }
+
+
+ 
             
 
         if(distance >= 200f)
