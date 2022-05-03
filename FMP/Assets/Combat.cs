@@ -61,11 +61,7 @@ public class Combat : MonoBehaviour
                         cinemachine.SetActive(true);
                 }
             }
-            else
-            {
-                //Debug.Log("no enemy target?");
-                cinemachine.SetActive(true);
-            }
+
         }
 
 
@@ -74,7 +70,7 @@ public class Combat : MonoBehaviour
 
         if(distance >= 200f)
         {
-            cameraScript.target = gameObject.transform;
+            cinemachine.SetActive(true);
         }
     }
 }
