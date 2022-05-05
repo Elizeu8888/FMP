@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour
     public int state;
     public NavMeshAgent agent;
 
-    bool ishurt;
+    bool ishurt, cantakedamage;
 
     Transform player;
     public Transform lips;
@@ -38,7 +38,7 @@ public class EnemyAI : MonoBehaviour
 
     public void PlayerCombatDead()
     {
-        player.gameObject.GetComponent<Combat>().Deadagainlol();
+        //player.gameObject.GetComponent<Combat>().Deadagainlol();
     }
 
 
@@ -56,14 +56,16 @@ public class EnemyAI : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("dead"))
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("dead") && cantakedamage == true)
         {
-            currentHealth -= damage;
+            anim.Play("hurt");
             DamageIndicator indicator = Instantiate(damageText, transform.position, Quaternion.identity).GetComponent<DamageIndicator>();
             indicator.SetDamageText(damage);
             GameObject bloodyblood = Instantiate(bloodSplat, transform.position, Quaternion.identity);
             Destroy(bloodyblood, 2);
-            anim.Play("hurt");
+            currentHealth -= damage;
+            cantakedamage = false;
+
         }
 
         if (currentHealth <= 0) anim.Play("dead");
@@ -82,8 +84,9 @@ public class EnemyAI : MonoBehaviour
             ishurt = true;
             
         }
-        else
+        else if(!anim.GetCurrentAnimatorStateInfo(0).IsName("hurt"))
         {
+            cantakedamage = true;
             agent.updatePosition = true;
             ishurt = false;
             //agent.enabled = true;
@@ -162,8 +165,6 @@ public class EnemyAI : MonoBehaviour
     private void AttackPlayer()
     {
       
-
-
         transform.LookAt(player);
 
         if (!alreadyAttacked && !anim.GetCurrentAnimatorStateInfo(0).IsName("hurt") && !anim.GetCurrentAnimatorStateInfo(0).IsName("dead"))

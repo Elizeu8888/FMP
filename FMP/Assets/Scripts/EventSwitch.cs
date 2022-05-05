@@ -5,14 +5,8 @@ using UnityEngine;
 
 public class EventSwitch : MonoBehaviour
 {
-    public UnityEvent use;
-    public UnityEvent altUse;
-    public UnityEvent altUse2;
-    public UnityEvent altUse3;
-    public UnityEvent altUse4;
-    public UnityEvent altUse5;
-    public UnityEvent altUse6;
-    public UnityEvent damage;
+    public UnityEvent use,altUse, altUse2, altUse3, altUse4, altUse5, altUse6, altUse7;
+    public UnityEvent damage,attackball,attack2,attack3;
     //public SoundManager soundscript;
 
     public void Damage()
@@ -50,5 +44,9 @@ public class EventSwitch : MonoBehaviour
     public void AltUse6()
     {
         altUse6.Invoke();
+    }
+    public void AltUse7()
+    {
+        altUse7.Invoke();
     }
 }

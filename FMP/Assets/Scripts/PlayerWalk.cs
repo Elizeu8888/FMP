@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerWalk : MonoBehaviour
 {
-    public bool attacking;
+    public bool attacking,specialattacking;
     public Rigidbody rb;
     public Transform cam, camAIM;
 
@@ -14,7 +14,6 @@ public class PlayerWalk : MonoBehaviour
     float turnsmoothvelocity = 0.5f;
 
     public float maxVelocity = 20f, jumpVelocity = 100f;
-
 
     public Transform groundcheck;
     public float grounddistance = 0.4f;
@@ -41,8 +40,23 @@ public class PlayerWalk : MonoBehaviour
         //-----------------------------------------------------------------
         if (anim.GetCurrentAnimatorStateInfo(2).IsTag("attack"))
         {
-            attacking = true;
+            specialattacking = true;
             anim.SetLayerWeight(2, 1);
+            var lookDir = transform.position - camAIM.position;
+            lookDir.y = 0;
+            transform.rotation = Quaternion.LookRotation(lookDir);
+            anim.SetBool("specialattacking", true);
+        }
+        else
+        {
+            anim.SetBool("specialattacking", false);
+            specialattacking = false;
+            anim.SetLayerWeight(2, 0);
+        }
+        if (anim.GetCurrentAnimatorStateInfo(1).IsTag("attack"))
+        {
+            attacking = true;
+            anim.SetLayerWeight(1, 1);
             var lookDir = transform.position - camAIM.position;
             lookDir.y = 0;
             transform.rotation = Quaternion.LookRotation(lookDir);
@@ -52,8 +66,14 @@ public class PlayerWalk : MonoBehaviour
         {
             anim.SetBool("attacking", false);
             attacking = false;
-            anim.SetLayerWeight(2, 0);
         }
+
+
+
+
+
+
+
         //-----------------------------------------------------------------
         if (isgrounded == false)
         {

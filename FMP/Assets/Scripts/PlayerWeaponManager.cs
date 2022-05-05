@@ -71,10 +71,7 @@ public class PlayerWeaponManager : MonoBehaviour
             anim.SetBool("weaponOUT", false);
         }
 
-        if(Input.GetMouseButtonDown(0) && weapondrawn == true && !weaponMenu.activeSelf)
-        {
-            Attack();
-        }
+
 
     }
 
