@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackrange: {fileID: 4066408684164525883}
-  damage: 10
+  damage: 25
 --- !u!135 &4066408684164525883
 SphereCollider:
   m_ObjectHideFlags: 0

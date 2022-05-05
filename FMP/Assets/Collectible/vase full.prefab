@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5813115081768107474}
   - component: {fileID: 3529461268771566972}
   - component: {fileID: 2943070950090578546}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: vase full
-  m_TagString: Untagged
+  m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

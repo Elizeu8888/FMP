@@ -46,8 +46,7 @@ public class AbilityDamage : MonoBehaviour
 
     void OnTriggerEnter(Collider cal)
     {
-        if(cal.gameObject.tag == "enemy")
-            LaunchDamage(attackrange, damage);
+        LaunchDamage(attackrange, damage);
 
     }
 
